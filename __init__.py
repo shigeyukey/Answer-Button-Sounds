@@ -3,7 +3,6 @@
 # Answer Button Sounds (original)
 	# Ankiweb https://ankiweb.net/shared/info/679615590
 	# github https://github.com/khonkhortisan/Answer-Button-Sounds
-
 # Copyright (C) 2025 Shigeyuki <http://patreon.com/Shigeyuki>
 
 # This program is free software: you can redistribute it and/or modify
@@ -21,17 +20,16 @@
 
 import os
 
-from anki import hooks
+from aqt import gui_hooks
 from aqt.sound import play, clearAudioQueue, AVPlayer
 #from aqt.reviewer import Reviewer
 
 addon_path = os.path.dirname(__file__)
 user_files = os.path.join(addon_path, "user_files")
 
-def answersound(card, ease, early):
-	#add sounds for extra buttons here
+def answersound(reviewer, card, ease):
 	if ease == 1:
-		clearAudioQueue() #force feedback to play now. Apparently this has to be within the if to be defined. Or I have to stop using the python console as if it's the addon.
+		clearAudioQueue()
 		play(os.path.join(user_files, "again.mp3"))
 	if ease == 2:
 		clearAudioQueue()
@@ -42,11 +40,11 @@ def answersound(card, ease, early):
 	if ease == 4:
 		clearAudioQueue()
 		play(os.path.join(user_files, "easy.mp3"))
-	#add sounds for extra buttons here
-	#preventclearingAudioQueue() #see ~~nextCard()~~ play_tags #force feedback to continue playing now
-hooks.schedv2_did_answer_review_card.append(answersound)
 
-def _play_tags(self, tags):
+
+gui_hooks.reviewer_did_answer_card.append(answersound)
+
+def _play_tags(self:AVPlayer, tags):
     """Clear the existing queue, then start playing provided tags."""
     self._enqueued = tags[:]
     #if self.interrupt_current_audio:
@@ -55,18 +53,3 @@ def _play_tags(self, tags):
         self._stop_if_playing()
     self._play_next_if_idle()
 AVPlayer.play_tags=_play_tags
-
-#def pageflip(self, url):
-#	play(os.path.join(user_files, "flip.mp3"))
-#	error();
-#	if url == "ans":
-#		clearAudioQueue()
-#		play(os.path.join(user_files, "flip.mp3"))
-#		#preventclearingAudioQueue()
-#		error();
-#	#if url == "del":
-#	#	clearAudioQueue()
-#	#	play(os.path.join(user_files, "rip.mp3"))
-#	#	#preventclearingAudioQueue()
-#	#	error();
-#Reviewer._linkHandler = hooks.wrap(Reviewer._linkHandler, pageflip, "before")
