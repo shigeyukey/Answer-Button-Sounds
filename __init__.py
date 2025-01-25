@@ -1,8 +1,9 @@
 # Answer Button Sounds addon
 # Copyright (C) 2019-2020 Kyle "Khonkhortisan" Mills <https://github.com/khonkhortisan>
 # Answer Button Sounds (original)
-	# Ankiweb https://ankiweb.net/shared/info/679615590
-	# github https://github.com/khonkhortisan/Answer-Button-Sounds
+    # Ankiweb https://ankiweb.net/shared/info/679615590
+    # github https://github.com/khonkhortisan/Answer-Button-Sounds
+
 # Copyright (C) 2025 Shigeyuki <http://patreon.com/Shigeyuki>
 
 # This program is free software: you can redistribute it and/or modify
@@ -27,27 +28,27 @@ addon_path = os.path.dirname(__file__)
 user_files = os.path.join(addon_path, "user_files")
 
 def answersound(reviewer, card, ease):
-	if ease == 1:
-		clearAudioQueue()
-		play(os.path.join(user_files, "again.mp3"))
-	if ease == 2:
-		clearAudioQueue()
-		play(os.path.join(user_files, "hard.mp3"))
-	if ease == 3:
-		clearAudioQueue()
-		play(os.path.join(user_files, "good.mp3"))
-	if ease == 4:
-		clearAudioQueue()
-		play(os.path.join(user_files, "easy.mp3"))
-
+    #add sounds for extra buttons here
+    if ease == 1:
+        clearAudioQueue() #force feedback to play now. Apparently this has to be within the if to be defined. Or I have to stop using the python console as if it's the addon.
+        play(os.path.join(user_files, "again.mp3"))
+    if ease == 2:
+        clearAudioQueue()
+        play(os.path.join(user_files, "hard.mp3"))
+    if ease == 3:
+        clearAudioQueue()
+        play(os.path.join(user_files, "good.mp3"))
+    if ease == 4:
+        clearAudioQueue()
+        play(os.path.join(user_files, "easy.mp3"))
+    #add sounds for extra buttons here
+    #preventclearingAudioQueue() #see ~~nextCard()~~ play_tags #force feedback to continue playing now
 
 gui_hooks.reviewer_did_answer_card.append(answersound)
 
 def _play_tags(self:AVPlayer, tags):
     """Clear the existing queue, then start playing provided tags."""
     self._enqueued = tags[:]
-    #if self.interrupt_current_audio:
-    #if self.interrupt_current_audio and not nextCard
     if self.interrupt_current_audio and False: #TODO: do clear audio when flipping to back, don't clear it when going to the next card. This was easier when it was in the nextCard function so I could just disable it there.
         self._stop_if_playing()
     self._play_next_if_idle()

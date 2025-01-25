@@ -3,3 +3,6 @@ __pycache__
 *.zip
 *.ankiaddon
 /old-code.py
+/test_02.py
+/test.py
+/zzz_makeAnkiAddonFile.py
