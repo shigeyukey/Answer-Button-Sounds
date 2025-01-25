@@ -22,7 +22,6 @@ import os
 
 from aqt import gui_hooks
 from aqt.sound import play, clearAudioQueue, AVPlayer
-#from aqt.reviewer import Reviewer
 
 addon_path = os.path.dirname(__file__)
 user_files = os.path.join(addon_path, "user_files")
